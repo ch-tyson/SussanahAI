@@ -2,7 +2,7 @@ from flask import Flask, request
 import cohere
 from cohere.responses.classify import Example
 
-co = cohere.Client('5kgNUypL3OHefbOcf5IrbYnkBFhcBYpFs8vGDSFG')
+co = cohere.Client('')
 
 app = Flask(__name__)
 

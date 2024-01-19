@@ -1,20 +1,25 @@
+# Import necessary libraries (Mohith)
 from flask import Flask, request
 import cohere
 from cohere.responses.classify import Example
 
-co = cohere.Client('')
+# Initialize the Cohere client with my API key just trying to figure out another way than just placing here (Mohith)
+co = cohere.Client('apiKey here')
 
+# Create a new Flask web server (Mohith)
 app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
 
+# Define the route for spam detection (Mohith)
 @app.route('/spam_detection', methods=['POST'])
 def spam_detection():
     text = request.json['text']
     response = co.classify(
         inputs=[text],
+        # Define the examples for the learning model for spam examples (Mohith)
         examples=[
             Example("Get rich quick with this simple trick", "Spam"),
             Example("You're the lucky winner of our lottery", "Spam"),
@@ -26,13 +31,16 @@ def spam_detection():
             Example("Let's catch up over coffee", "Not Spam")
         ]
     )
+    # Return the classifications (Mohith)
     return response.classifications
 
+# Define the route for sentiment analysis (Mohith)
 @app.route('/sentiment_analysis', methods=['POST'])
 def sentiment_analysis():
     text = request.json['text']
     response = co.classify(
         inputs=[text],
+        # Define the examples for the learning model for sentiment examples (Mohith)
         examples=[
             Example("This is the best day of my life!", "Positive"),
             Example("I'm really looking forward to the weekend", "Positive"),
@@ -48,10 +56,13 @@ def sentiment_analysis():
             Example("It's not bad, but it's not great either", "Neutral")
         ]
     )
+    # Return the classifications (Mohith)
     return response.classifications
 
+# Define the route for text summarization (Mohith)
 @app.route('/text_summarization', methods=['POST'])
 def text_summarization():
     text = request.json['text']
     response = co.summarize(text=text)
+    # Return the summary (Mohith)
     return response.summary

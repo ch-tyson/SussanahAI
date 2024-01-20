@@ -1,6 +1,9 @@
 # Import necessary libraries (Mohith)
 from flask import Flask, request
+from flask_cors import CORS
+
 import cohere
+
 from cohere.responses.classify import Example
 
 # Initialize the Cohere client with my API key just trying to figure out another way than just placing here (Mohith)

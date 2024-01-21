@@ -1,30 +1,76 @@
 import { useState } from "react";
 import axios from "axios";
 import "./App.css";
+import PieChart from "./PieChart";
+import {
+  Chart,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+Chart.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function App() {
   // new line start
-  const [profileData, setProfileData] = useState(null);
+  const classifyOption = ["Sentiment", "Spam", "Summary"];
+  const [checkedState, setCheckedState] = useState(
+    new Array(classifyOption.length).fill(false)
+  );
+
+  const [result, setResultData] = useState(null);
+  const [sentimentData, setSentimentData] = useState(null);
+  const [spamData, setSpamData] = useState(null);
 
   let initialState = {
     name: "Enter your text here",
+    options: [],
   };
-  const [person, setPerson] = useState(initialState);
+  const [analysisForm, setAnalysisForm] = useState(initialState);
 
   function getData(e) {
     e.preventDefault();
     axios({
       method: "post",
-      data: JSON.stringify(person),
+      data: JSON.stringify(analysisForm),
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
         const res = response.data;
         console.log(res);
-        setProfileData({
-          profile_name: res.message,
-          about_me: res.message,
+        setResultData({
+          paragraph: res.summary ? res.summary : null,
+          options: [
+            res.sentiment ? res.sentiment : null,
+            res.spam ? res.spam : null,
+          ],
+          sentimentValue: res.sentimentValue,
         });
+        if (res.spamValue)
+          setSpamData({
+            labels: ["Spam", "Not spam"],
+            datasets: [
+              {
+                label: "Spam analysis",
+                data: res.spamValue,
+                backgroundColor: ["#ecf0f1", "#50AF95", "#f3ba2f"],
+                borderColor: "black",
+                borderWidth: 2,
+              },
+            ],
+          });
+        else setSpamData(null);
       })
       .catch((error) => {
         if (error.response) {
@@ -38,8 +84,28 @@ function App() {
 
   const onChangeHandler = (event) => {
     const { name, value } = event;
-    setPerson((prev) => {
+    setAnalysisForm((prev) => {
       return { ...prev, [name]: value };
+    });
+  };
+
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setCheckedState(updatedCheckedState);
+
+    setAnalysisForm((prev) => {
+      let choices = [];
+
+      for (let i = 0; i < checkedState.length; i++) {
+        if (updatedCheckedState[i]) {
+          choices.push(classifyOption[i].toLowerCase());
+        }
+      }
+
+      return { ...prev, options: choices };
     });
   };
 
@@ -50,16 +116,14 @@ function App() {
         <h1 className="App-title">SussanahAI</h1>
 
         <form onSubmit={getData}>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={person.name}
-              onChange={(e) => onChangeHandler(e.target)}
-            />
-          </label>
-          <input type="submit" value="Submit" />
+          <textarea
+            type="text"
+            name="paragraph"
+            value={analysisForm.paragraph}
+            onChange={(e) => onChangeHandler(e.target)}
+            cols="60"
+            rows="10"
+          />
         </form>
 
         <p className="App-description">
@@ -72,26 +136,53 @@ function App() {
           <b>Summary</b>: Sussanah condenses the text into a brief overview
           capturing the main points.
         </p>
+
+        <form onSubmit={getData}>
+          {classifyOption.map((name, index) => {
+            return (
+              <li key={index}>
+                <div className="list-item">
+                  <input
+                    type="checkbox"
+                    id={`custom-checkbox-${index}`}
+                    name={name}
+                    value={name}
+                    checked={checkedState[index]}
+                    onChange={() => handleOnChange(index)}
+                  />
+                  <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
+                </div>
+              </li>
+            );
+          })}
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
+
+        {/*newline*/}
+        {result && (
+          <div>
+            {result.paragraph && <p>Summary: {result.paragraph}</p>}
+            {(result.options.spam != null ||
+              result.options.sentiment != null) && (
+              <p>Result: {result.options}</p>
+            )}
+            {sentimentData && (
+              <div id="sentiment_chart">
+                <p>Sentiment analysis</p>
+                <PieChart chartData={sentimentData} />
+              </div>
+            )}
+            {spamData && (
+              <div id="spam_chart">
+                <p>Spam analysis</p>
+                <PieChart chartData={spamData} />
+              </div>
+            )}
+          </div>
+        )}
+        {/*end*/}
       </header>
-      <body className="App-body">
-        <div className="App-input">
-          <textarea
-            className="App-text"
-            placeholder="Enter text here"
-          ></textarea>
-        </div>
-        <div className="App-buttons">
-          <button className="App-button">Sentiment</button>
-          <button className="App-button">Spam</button>
-          <button className="App-button">Summary</button>
-        </div>
-        <div className="App-output">
-          <div className="App-pie"></div>
-          <div className="App-spam"></div>
-          <div className="App-summary"></div>
-        </div>
-      </body>
-      <footer className="App-footer"></footer>
     </div>
   );
 }

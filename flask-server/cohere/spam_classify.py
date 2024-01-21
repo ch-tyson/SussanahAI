@@ -27,4 +27,18 @@ def classify_spam(text):
 
 
 classify_spam("Win a free prize!")
-# sample output The confidence levels of the labels are: [{'spam': 0.9999999999999999, 'non-spam': 1.1102230246251565e-16}]
+# sample output The confidence levels of the labels are: [{'spam':
+# 0.9999999999999999, 'non-spam': 1.1102230246251565e-16}]
+
+def get_spam_percentage(text):
+    response = classify_spam(text)
+    spam_score = response/labels['spam'].confidence
+    non_spam_score = response.labels['non-spam'].confidence
+    return [spam_score, non_spam_score]
+
+def get_spam_result(text):
+    spam_score = get_spam_percentage(text)[0]
+    if (spam_score < 0.5):
+        return " spam"
+    else:
+        return " not spam"

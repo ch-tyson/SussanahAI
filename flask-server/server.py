@@ -1,10 +1,7 @@
 # Import necessary libraries (Mohith)
-from flask import Flask, request
+from flask import Flask, request, redirect, url_for, request, jsonify
 from flask_cors import CORS
-
-import cohere
-
-from cohere.responses.classify import Example
+from classify_spam import get_spam_result, get_spam_percentage
 
 # # Initialize the Cohere client with my API key just trying to figure out another way than just placing here (Mohith)
 # co = cohere.Client('apiKey here')
@@ -15,16 +12,24 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 # API routes and endpoints to get data
 @app.route('/')
 def index():
-	return {'message': 'Hello, World!'}
+	return {'message': 'Hello, my name is SussannahAI!'}
 
 @app.route("/spam", methods=["POST"])
 def spam():
-	print(request.json)
+    options = request.json["options"]
 	text = request.json["name"]
-	processed_text = text.upper()
+	processed_text = text
 
-	response = jsonify(name=processed_text)
+	responseData = {}
+    for option in options:
+        if option == "spam":
+            spam = get_spam_result(processed_text)
+            spam_percent = get_spam_percentage(processed_text)
+            responseData["spam"] = spam
+            responseData["spamPercent"] = spam_percent
 
+    response = jsonify(responsiveData)
+    
 	return response
 
 if __name__ == '__main__':

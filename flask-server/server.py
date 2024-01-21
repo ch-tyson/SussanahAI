@@ -15,35 +15,20 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 # API routes and endpoints to get data
 @app.route('/')
 def index():
-	response_body = {
-		"name": "FraudAI",
-		"about": "Hello, this is fraudAI"
-	}
-	return response_body
+	return {'message': 'Hello, World!'}
+
+@app.route("/spam", methods=["POST"])
+def spam():
+	print(request.json)
+	text = request.json["name"]
+	processed_text = text.upper()
+
+	response = jsonify(name=processed_text)
+
+	return response
 
 if __name__ == '__main__':
 	app.run(debug=True)
-
-# # Define the route for spam detection (Mohith)
-# @app.route('/spam_detection', methods=['POST'])
-# def spam_detection():
-#     text = request.json['text']
-#     response = co.classify(
-#         inputs=[text],
-#         # Define the examples for the learning model for spam examples (Mohith)
-#         examples=[
-#             Example("Get rich quick with this simple trick", "Spam"),
-#             Example("You're the lucky winner of our lottery", "Spam"),
-#             Example("Click here to claim your free vacation", "Spam"),
-#             Example("Earn $5000 a day from home", "Spam"),
-#             Example("Please review the attached invoice", "Not Spam"),
-#             Example("Looking forward to our lunch meeting", "Not Spam"),
-#             Example("Can you review my code?", "Not Spam"),
-#             Example("Let's catch up over coffee", "Not Spam")
-#         ]
-#     )
-#     # Return the classifications (Mohith)
-#     return response.classifications
 
 # # Define the route for sentiment analysis (Mohith)
 # @app.route('/sentiment_analysis', methods=['POST'])

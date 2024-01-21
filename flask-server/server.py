@@ -17,18 +17,18 @@ def index():
 @app.route("/spam", methods=["POST"])
 def spam():
     options = request.json["options"]
-    text = request.json["name"]
+    text = request.json["paragraph"]
     processed_text = text
 
     responseData = {}
     for option in options:
         if option == "spam":
             spam = get_spam_result(processed_text)
-            spam_percent = get_spam_percentage(processed_text)
+            spam_value = get_spam_percentage(processed_text)
             responseData["spam"] = spam
-            responseData["spamPercent"] = spam_percent
+            responseData["spamValue"] = spam_value
 
-    response = jsonify(responsiveData)
+    response = jsonify(responseData)
     
     return response
 

@@ -1,24 +1,91 @@
 import { useState } from "react";
 import axios from "axios";
 import "./App.css";
-import logo from "./logo.svg";
+import PieChart from "./PieChart";
+import {
+  Chart,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+Chart.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function App() {
   // new line start
-  const [profileData, setProfileData] = useState(null);
+  const scanOption = ["Sentiment", "Spam", "Summary"];
+  const [checkedState, setCheckedState] = useState(
+    new Array(scanOption.length).fill(false)
+  );
 
-  function getData() {
+  const [result, setResultData] = useState(null);
+  const [sentimentData, setSentimentData] = useState(null);
+  const [spamData, setSpamData] = useState(null);
+
+  let initialState = {
+    name: "Enter your text here",
+    options: [],
+  };
+  const [analysisForm, setAnalysisForm] = useState(initialState);
+
+  function getData(e) {
+    e.preventDefault();
     axios({
-      method: "GET",
-      url: "http://127.0.0.1:8000/",
+      method: "post",
+      url: "http://127.0.0.1:5000/spam",
+      data: JSON.stringify(analysisForm),
+      headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
         const res = response.data;
         console.log(res);
-        setProfileData({
-          profile_name: res.name,
-          about_me: res.about,
+        setResultData({
+          paragraph: res.summary ? res.summary : null,
+          options: [
+            res.sentiment ? res.sentiment : null,
+            res.spam ? res.spam : null,
+          ],
+          sentimentValue: res.sentimentValue,
         });
+        if (res.sentimentValue)
+          setSentimentData({
+            labels: ["Negative", "Positive", "Neutral"],
+            datasets: [
+              {
+                label: "Sentiment analysis",
+                data: res.sentimentValue,
+                backgroundColor: ["#ecf0f1", "#50AF95", "#f3ba2f"],
+                borderColor: "black",
+                borderWidth: 2,
+              },
+            ],
+          });
+        else setSentimentData(null);
+        if (res.spamValue)
+          setSpamData({
+            labels: ["Spam", "Not spam"],
+            datasets: [
+              {
+                label: "Spam analysis",
+                data: res.spamValue,
+                backgroundColor: ["#ecf0f1", "#50AF95", "#f3ba2f"],
+                borderColor: "black",
+                borderWidth: 2,
+              },
+            ],
+          });
+        else setSpamData(null);
       })
       .catch((error) => {
         if (error.response) {
@@ -30,77 +97,102 @@ function App() {
   }
   //end of new line
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+  const onChangeHandler = (event) => {
+    const { name, value } = event;
+    setAnalysisForm((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
 
-        {/* new line start*/}
-        <p>To get your profile details: </p>
-        <button onClick={getData}>Click me</button>
-        {profileData && (
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setCheckedState(updatedCheckedState);
+
+    setAnalysisForm((prev) => {
+      let choices = [];
+
+      for (let i = 0; i < checkedState.length; i++) {
+        if (updatedCheckedState[i]) {
+          choices.push(scanOption[i].toLowerCase());
+        }
+      }
+
+      return { ...prev, options: choices };
+    });
+  };
+
+  return (
+    <div className="Overall-app">
+      <header className="App-header">
+        <img src="sss_logo.png" className="App-logo" alt="logo" />
+        <h1 className="App-title">SussanahAI</h1>
+
+        <form onSubmit={getData}>
+          <textarea
+            type="text"
+            name="paragraph"
+            value={analysisForm.paragraph}
+            onChange={(e) => onChangeHandler(e.target)}
+            cols="60"
+            rows="10"
+          />
+        </form>
+
+        <p className="App-description">
+          Enter any text below and have Sussannah analyze it for you! She can
+          analyze it either for sentiment, spam, or summary. <br></br>
+          <b>Sentiment</b>: Sussanah analyzes the emotion in the text and
+          displays a pie chart of emotions shown. <br></br>
+          <b>Spam</b>: Sussanah analyzes the text and indicates how much is
+          considered spam. <br></br>
+          <b>Summary</b>: Sussanah condenses the text into a brief overview
+          capturing the main points.
+        </p>
+
+        <form onSubmit={getData}>
+          {scanOption.map((name, index) => {
+            return (
+              <li key={index}>
+                <div className="list-item">
+                  <input
+                    type="checkbox"
+                    id={`custom-checkbox-${index}`}
+                    name={name}
+                    value={name}
+                    checked={checkedState[index]}
+                    onChange={() => handleOnChange(index)}
+                  />
+                  <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
+                </div>
+              </li>
+            );
+          })}
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
+
+        {/*newline*/}
+        {result && (
           <div>
-            <p>Profile name: {profileData.profile_name}</p>
-            <p>About me: {profileData.about_me}</p>
+            {(result.options.spam != null ||
+              result.options.sentiment != null) && (
+              <p>Result: {result.options}</p>
+            )}
+            {spamData && (
+              <div id="spam_chart">
+                <p>Spam analysis</p>
+                <PieChart chartData={spamData} />
+              </div>
+            )}
           </div>
         )}
-        {/* end of new line */}
+        {/*end*/}
       </header>
     </div>
   );
 }
 
 export default App;
-
-// function App() {
-//   return (
-//     <div className="Overall-app">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <h1 className="App-title">SussanahAI</h1>
-//         <p className="App-description">
-//           Enter any text below and have Sussannah analyze it for you! She can
-//           analyze it either for sentiment, spam, or summary. <br></br>
-//           <b>Sentiment</b>: Sussanah analyzes the emotion in the text and
-//           displays a pie chart of emotions shown. <br></br>
-//           <b>Spam</b>: Sussanah analyzes the text and indicates how much is
-//           considered spam. <br></br>
-//           <b>Summary</b>: Sussanah condenses the text into a brief overview
-//           capturing the main points.
-//         </p>
-//       </header>
-//       <body className="App-body">
-//         <div className="App-input">
-//           <textarea
-//             className="App-text"
-//             placeholder="Enter text here"
-//           ></textarea>
-//         </div>
-//         <div className="App-buttons">
-//           <button className="App-button">Sentiment</button>
-//           <button className="App-button">Spam</button>
-//           <button className="App-button">Summary</button>
-//         </div>
-//         <div className="App-output">
-//           <div className="App-pie"></div>
-//           <div className="App-spam"></div>
-//           <div className="App-summary"></div>
-//         </div>
-//       </body>
-//       <footer className="App-footer"></footer>
-//     </div>
-//   );
-// }
-
-// export default App;

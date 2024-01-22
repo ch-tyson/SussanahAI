@@ -130,17 +130,6 @@ function App() {
         <img src="sss_logo.png" className="App-logo" alt="logo" />
         <h1 className="App-title">SussanahAI</h1>
 
-        <form onSubmit={getData}>
-          <textarea
-            type="text"
-            name="paragraph"
-            value={analysisForm.paragraph}
-            onChange={(e) => onChangeHandler(e.target)}
-            cols="60"
-            rows="10"
-          />
-        </form>
-
         <p className="App-description">
           Enter any text below and have Sussannah analyze it for you! She can
           analyze it either for sentiment, spam, or summary. <br></br>
@@ -152,26 +141,45 @@ function App() {
           capturing the main points.
         </p>
 
+        <div className="App-description">
+          <form onSubmit={getData}>
+            <textarea
+              type="text"
+              name="paragraph"
+              value={analysisForm.paragraph}
+              onChange={(e) => onChangeHandler(e.target)}
+              cols="120"
+              rows="25"
+            />
+          </form>
+        </div>
+
+        {/*newline*/}
+        <br></br>
         <form onSubmit={getData}>
           {scanOption.map((name, index) => {
             return (
-              <li key={index}>
-                <div className="list-item">
-                  <input
-                    type="checkbox"
-                    id={`custom-checkbox-${index}`}
-                    name={name}
-                    value={name}
-                    checked={checkedState[index]}
-                    onChange={() => handleOnChange(index)}
-                  />
-                  <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
+              <div className="App-buttons-outer">
+                <div className="App-buttons">
+                  <li id="Buttons-list" key={index}>
+                    <input
+                      type="checkbox"
+                      id={`custom-checkbox-${index}`}
+                      name={name}
+                      value={name}
+                      checked={checkedState[index]}
+                      onChange={() => handleOnChange(index)}
+                    />
+                    <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
+                  </li>
                 </div>
-              </li>
+              </div>
             );
           })}
           <br />
-          <input type="submit" value="Submit" />
+          <div className="Submit-button">
+            <input type="submit" value="Submit" />
+          </div>
         </form>
 
         {/*newline*/}

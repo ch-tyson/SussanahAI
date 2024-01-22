@@ -8,11 +8,7 @@ co = cohere.Client(os.getenv('COHERE_API_KEY','5kgNUypL3OHefbOcf5IrbYnkBFhcBYpFs
 def summary(text):
   response = co.summarize(
     text=text,
-    model='large',
-    length='medium',
-    format='paragraph',
-    extractiveness='medium'
-)
-
-summary = response.summary
+    #length, format, and extractiveness are all defaulted to auto to work best based on input text
+  )
+  return response.summary
 

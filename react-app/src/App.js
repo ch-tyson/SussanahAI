@@ -43,7 +43,7 @@ function App() {
     e.preventDefault();
     axios({
       method: "post",
-      url: "http://127.0.0.1:5000/spam",
+      url: "http://localhost:5000/spam",
       data: JSON.stringify(analysisForm),
       headers: { "Content-Type": "application/json" },
     })
@@ -177,8 +177,7 @@ function App() {
         {/*newline*/}
         {result && (
           <div>
-            {(result.options.spam != null ||
-              result.options.sentiment != null) && (
+            {(result.options[1] != null || result.options[0] != null) && (
               <p>Result: {result.options}</p>
             )}
             {spamData && (

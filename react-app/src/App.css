@@ -33,10 +33,6 @@
   font-weight: '400';
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 .App-footer {
   background-color: #C7E1FF;
 }
@@ -68,15 +64,37 @@
   margin-bottom: 20px;
 }
 
+.App-buttons-outer {
+  text-align: center;
+}
+
 .App-buttons {
   border: none;
-  color: white;
-  display: block;
+  color: #6E6CCD;
+  display: table;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
   font-family: 'Inter';
   font-weight: '400';
+  text-align: center;
+  text-decoration: bold;
+}
+
+input[type=submit] {
+  text-align: center;
+  font-size: 20px;
+  font-family: 'Inter';
+  font-weight: '400';
+  color: #6E6CCD;
+}
+
+.Submit-button {
+  text-align: center;
+}
+
+li {
+  display: inline;
 }
 
 .App-body {

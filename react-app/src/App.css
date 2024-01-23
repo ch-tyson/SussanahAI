@@ -4,7 +4,7 @@
 
 body {
   /* background-color: #C7E1FF; */
-  background-color: #f5f7ff;
+  background-color: #e1e1e3;
 }
 
 .App-header {
@@ -40,10 +40,6 @@ body {
   font-family: 'Hind';
 }
 
-.App-footer {
-  background-color: #C7E1FF;
-}
-
 .App-input {
   border: none;
   width: 300px;
@@ -74,6 +70,7 @@ body {
 .text-input {
   resize: none;
   border-radius: 1rem;
+  background-color: #f5f7ff;
 }
 
 .Submit-button {
@@ -86,4 +83,47 @@ li {
 
 .App-body {
   background-color: #C7E1FF;
+}
+
+@keyframes coolCheck {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Style for the custom checkboxes */
+#Buttons-list input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
+}
+
+#Buttons-list label {
+  position: relative;
+  padding-left: 30px; /* Adjust as needed */
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px; /* Adjust as needed */
+}
+
+#Buttons-list label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px; /* Adjust as needed */
+  height: 20px; /* Adjust as needed */
+  border: 1px solid #000000; /* Border color */
+  background-color: #fff; /* Unchecked background color */
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+#Buttons-list input[type="checkbox"]:checked + label:before {
+  background-color: #9A99D7; /* Checked background color */
+  animation: coolCheck 0.5s ease; /* Apply the cool check animation */
 }

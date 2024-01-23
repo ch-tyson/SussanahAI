@@ -2,9 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import "./App.css";
 import PieChart from "./PieChart";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Checkbox from "@material-ui/core/Checkbox";
 import {
   Chart,
   ArcElement,
@@ -25,14 +22,14 @@ Chart.register(
   Legend
 );
 
+
+
 function App() {
   // new line start
   const scanOption = ["Sentiment", "Spam", "Summary"];
   const [checkedState, setCheckedState] = useState(
     new Array(scanOption.length).fill(false)
   );
-
-  const [selectedCard, setSelectedCard] = useState(null);
 
   const [result, setResultData] = useState(null);
   const [sentimentData, setSentimentData] = useState(null);
@@ -129,33 +126,6 @@ function App() {
     });
   };
 
-
-  {
-    scanOption.map((name, index) => {
-      return (
-        <div className="App-buttons-outer">
-          <div className="App-buttons">
-            <li id="Buttons-list" key={index}>
-              <Card>
-                <CardContent>
-                  <Checkbox
-                    color="primary"
-                    id={`custom-checkbox-${index}`}
-                    name={name}
-                    value={name}
-                    checked={checkedState[index]}
-                    onChange={() => handleOnChange(index)}
-                  />
-                  <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
-                </CardContent>
-              </Card>
-            </li>
-          </div>
-        </div>
-      );
-    })
-  }
-
   return (
     <div className="Overall-app">
       <header className="App-header">
@@ -184,6 +154,7 @@ function App() {
             onChange={(e) => onChangeHandler(e.target)}
             cols="120"
             rows="25"
+            placeholder="Start your first message with Sussannah"
           />
         </form>
       </div>

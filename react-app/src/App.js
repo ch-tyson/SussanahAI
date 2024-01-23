@@ -2,8 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import "./App.css";
 import PieChart from "./PieChart";
-import AnalysisCard from "./AnalysisCard";
-
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Checkbox from "@material-ui/core/Checkbox";
 import {
   Chart,
   ArcElement,
@@ -128,21 +129,32 @@ function App() {
     });
   };
 
-  const descriptions = {
-    Sentiment: "Sussanah analyzes the emotion in the text and displays a pie chart of emotions shown.",
-    Spam: "Sussanah analyzes the text and indicates how much is considered spam.",
-    Summary: "Sussanah condenses the text into a brief overview capturing the main points.",
-  };
 
-  const [selectedCards, setSelectedCards] = useState([]);
-
-  const toggleCard = (name) => {
-    if (selectedCards.includes(name)) {
-      setSelectedCards(selectedCards.filter(card => card !== name));
-    } else {
-      setSelectedCards([...selectedCards, name]);
-    }
-  };
+  {
+    scanOption.map((name, index) => {
+      return (
+        <div className="App-buttons-outer">
+          <div className="App-buttons">
+            <li id="Buttons-list" key={index}>
+              <Card>
+                <CardContent>
+                  <Checkbox
+                    color="primary"
+                    id={`custom-checkbox-${index}`}
+                    name={name}
+                    value={name}
+                    checked={checkedState[index]}
+                    onChange={() => handleOnChange(index)}
+                  />
+                  <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
+                </CardContent>
+              </Card>
+            </li>
+          </div>
+        </div>
+      );
+    })
+  }
 
   return (
     <div className="Overall-app">
@@ -150,6 +162,17 @@ function App() {
         <img src="sss_logo.png" className="App-logo" alt="logo" />
         <h1 className="App-title">SUSSANNAH</h1>
       </header>
+
+      <p className="App-description">
+        Enter any text below and have Sussannah analyze it for you! She can
+        analyze it either for sentiment, spam, or summary. <br></br>
+        <b>Sentiment</b>: Sussanah analyzes the emotion in the text and displays
+        a pie chart of emotions shown. <br></br>
+        <b>Spam</b>: Sussanah analyzes the text and indicates how much is
+        considered spam. <br></br>
+        <b>Summary</b>: Sussanah condenses the text into a brief overview
+        capturing the main points.
+      </p>
 
       <div className="App-description">
         <form onSubmit={getData}>
@@ -168,17 +191,25 @@ function App() {
       {/*newline*/}
       <br></br>
       <form onSubmit={getData}>
-        <div className="Cards-container">
-          {scanOption.map((name, index) => (
-            <AnalysisCard
-              key={index}
-              name={name}
-              description={descriptions[name]}
-              onClick={toggleCard}
-              selected={selectedCards.includes(name)}
-            />
-          ))}
-        </div>
+        {scanOption.map((name, index) => {
+          return (
+            <div className="App-buttons-outer">
+              <div className="App-buttons">
+                <li id="Buttons-list" key={index}>
+                  <input
+                    type="checkbox"
+                    id={`custom-checkbox-${index}`}
+                    name={name}
+                    value={name}
+                    checked={checkedState[index]}
+                    onChange={() => handleOnChange(index)}
+                  />
+                  <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
+                </li>
+              </div>
+            </div>
+          );
+        })}
         <br />
         <div className="Submit-button">
           <input type="submit" value="Submit" />

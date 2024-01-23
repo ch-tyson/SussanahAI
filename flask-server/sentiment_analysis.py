@@ -48,7 +48,5 @@ def get_sentiment_scores(text):
 
 # Function to get the sentiment result (label) for a given text
 def get_sentiment_result(text):
-    scores = get_sentiment_scores(text)
-    max_score_index = scores.index(max(scores))
-    sentiments = ["Positive", "Negative", "Neutral"]
-    return sentiments[max_score_index]
+    response = classify_sentiment(text)
+    return response.prediction

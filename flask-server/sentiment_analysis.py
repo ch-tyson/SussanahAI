@@ -8,7 +8,7 @@ load_dotenv()
 # Create a Cohere client using the COHERE_API_KEY from the environment variables
 co = cohere.Client(os.getenv('COHERE_API_KEY','5kgNUypL3OHefbOcf5IrbYnkBFhcBYpFs8vGDSFG'))
 
-POSITIVE = "Postive"
+POSITIVE = "Positive"
 NEGATIVE = "Negative"
 NEUTRAL = "Neutral"
 
@@ -72,10 +72,10 @@ def classify_sentiment(text):
 def get_sentiment_scores(text):
     response = classify_sentiment(text)
     print("First label: ", response.labels)
-    negative_score = response.labels['Negative'].confidence
-    positive_score = response.labels['Negative'].confidence
-    neutral_score = response.labels['Neutral'].confidence
-    return [positive_score, negative_score, neutral_score]
+    positive_score = response.labels[POSITIVE].confidence
+    negative_score = response.labels[NEGATIVE].confidence
+    neutral_score = response.labels[NEUTRAL].confidence
+    return [negative_score, positive_score, neutral_score]
 
 # Function to get the sentiment result (label) for a given text
 def get_sentiment_result(text):

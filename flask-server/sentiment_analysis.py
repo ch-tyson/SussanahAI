@@ -41,6 +41,7 @@ def classify_sentiment(text):
 # Function to get the sentiment scores (confidence) for a given text
 def get_sentiment_scores(text):
     response = classify_sentiment(text)
+    print("First label: ", response.labels)
     positive_score = response.labels['Positive'].confidence
     negative_score = response.labels['Negative'].confidence
     neutral_score = response.labels['Neutral'].confidence
@@ -48,7 +49,5 @@ def get_sentiment_scores(text):
 
 # Function to get the sentiment result (label) for a given text
 def get_sentiment_result(text):
-    scores = get_sentiment_scores(text)
-    max_score_index = scores.index(max(scores))
-    sentiments = ["Positive", "Negative", "Neutral"]
-    return sentiments[max_score_index]
+    response = classify_sentiment(text)
+    return response.prediction

@@ -56,7 +56,7 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;  resize: none;
-  width: 80%;
+  width: 70%;
   min-height: 150px;
   padding: 12px 20px;
   box-sizing: border-box;
@@ -114,14 +114,14 @@ li {
   font-family: 'Hind';
   font-size: 1.3em;
   font-weight: 300;
-  background-color: #f8f8f8;
+  background-color: #fcf3f3;
   cursor: pointer;
 }
 
 .button:hover{
   background-image: linear-gradient(to left, #dbcdff, #b4c8fb);
   width: 12rem;
-  color: #f8f8f8;
+  color: #fcf3f3;
 }
 
 /* Info Cards */
@@ -132,7 +132,7 @@ li {
 }
 
 .info-card {
-  background: #f8f8f8;
+  background: #fcf3f3;
   border-radius: 1rem;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   padding: 20px;
@@ -159,6 +159,11 @@ li {
 
 /* Checkboxes */
 
+.form {
+  align-items: center;
+  text-align: center;
+}
+
 .App-buttons-outer {
   display: inline-flex;
   justify-content: space-between;
@@ -174,10 +179,12 @@ li {
 
 #Buttons-list label {
   position: relative;
-  padding: 0 50px 30px 30px;
+  color: #464646;
+  padding: 0 30px 30px 30px;
   cursor: pointer;
   display: flex;
-  font-size: 16px; /* Adjust as needed */
+  font-size: 20px; /* Adjust as needed */
+  font-family: 'Hind';
 }
 
 #Buttons-list label:before {
@@ -188,7 +195,7 @@ li {
   width: 20px; /* Adjust as needed */
   height: 20px; /* Adjust as needed */
   border: 1px solid #000000; /* Border color */
-  background-color: #f8f8f8; /* Unchecked background color */
+  background-color: #fcf3f3; /* Unchecked background color */
   border-radius: 4px;
   transition: background-color 0.3s;
   
@@ -197,4 +204,44 @@ li {
 #Buttons-list input[type="checkbox"]:checked + label:before {
   background-color: #9A99D7; /* Checked background color */
   animation: coolCheck 0.5s ease; /* Apply the cool check animation */
+}
+
+.Results-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+
+.Charts-container {
+  flex: 1;
+}
+
+.chart p {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-family: 'Hind';
+}
+
+h2 {
+  margin: 25px 0 10px;
+  color: #464646;
+  font-family: 'Hind';
+  text-align: center;
+}
+
+.summary-result{
+  margin: 0 25px 0 5px;
+  color: #555;
+  font-family: 'Hind';
+}
+
+.results-full {
+  margin: 50px 50px;
+  background: #fcf3f3;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 30px 50px 80px 50px;
 }

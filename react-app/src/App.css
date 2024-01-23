@@ -1,3 +1,7 @@
+* {
+  transition: all 400ms ease;
+}
+
 .App {
   text-align: center;
 }
@@ -13,7 +17,7 @@ body {
 
 @import url('https://fonts.googleapis.com/css?family=Titan+One');
 .App-title {
-  font-size: 80px;
+  font-size: 50px;
   font-family: 'Titan One', cursive;
   color: #9A99D7;
   text-align: center;
@@ -23,7 +27,7 @@ body {
 
 .App-logo {
   margin-top: 15px;
-  height: 200;
+  height: 150px;
   pointer-events: none;
   display: block;
   margin-left: auto;
@@ -35,7 +39,7 @@ body {
 @import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;400&display=swap');
 .App-description {
   text-align: center;
-  font-size: calc(0.5vw + 0.75rem);
+  font-size: calc(0.2vw + 1rem);
   color: black;
   font-family: 'Hind';
 }
@@ -45,7 +49,7 @@ body {
   width: 300px;
   height: 30px;
   font-size: 20px;
-  font-family: 'Inter';
+  font-family: 'Hind';
   font-weight: '400';
   color: #6E6CCD;
   text-align: center;
@@ -56,9 +60,7 @@ body {
 
 .App-text {
   border: none;
-  width: 300px;
-  height: 30px;
-  font-size: 20px;
+  font-size: 10px;
   font-family: 'Hind';
   font-weight: '400';
   color: #6E6CCD;
@@ -69,8 +71,19 @@ body {
 
 .text-input {
   resize: none;
+  width: 80%;
+  min-height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
   border-radius: 1rem;
-  background-color: #f5f7ff;
+  background-color: #f8f8f8;
+  font-size: 16px;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: hsl(251, 100%, 79%);
 }
 
 .Submit-button {
@@ -126,4 +139,32 @@ li {
 #Buttons-list input[type="checkbox"]:checked + label:before {
   background-color: #9A99D7; /* Checked background color */
   animation: coolCheck 0.5s ease; /* Apply the cool check animation */
+}
+
+.Charts-container{
+  display: inline-flex;
+}
+
+.color-change {
+  animation: hue-shift 4s infinite alternate;
+}
+
+.button {
+  display: grid;
+  margin: auto;
+  padding: .5rem;
+  border-radius: 1em;
+  border: 1px solid #121314;
+  width: 10rem;
+  font-family: 'Hind';
+  font-size: 1.3em;
+  font-weight: 300;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.button:hover{
+  background-image: linear-gradient(to left, #dbcdff, #b4c8fb);
+  width: 12rem;
+  color: #fff;
 }

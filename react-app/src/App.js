@@ -152,8 +152,7 @@ function App() {
             name="paragraph"
             value={analysisForm.paragraph}
             onChange={(e) => onChangeHandler(e.target)}
-            cols="120"
-            rows="25"
+            rows="3"
             placeholder="Start your first message with Sussannah"
           />
         </form>
@@ -182,32 +181,36 @@ function App() {
           );
         })}
         <br />
-        <div className="Submit-button">
-          <input type="submit" value="Submit" />
+        <div className="Submit-button color-change">
+          <input className="button color-change" type="submit" value="Submit" />
         </div>
       </form>
 
       {/*newline*/}
+      <h2>Your analysis details: </h2>
       {result && (
-        <div>
-          <p>Your analysis details: </p>
-          {(result.options.spam != null ||
-            result.options.sentiment != null) && (
-              <p>Result: {result.options}</p>
+        <div className="Results-container">
+          <div className="Charts-container">
+            {(result.options.spam != null ||
+              result.options.sentiment != null) && (
+                <p>Result: {result.options}</p>
+              )}
+            {spamData && (
+              <div id="spam_chart">
+                <p>Spam analysis</p>
+                <PieChart chartData={spamData} />
+              </div>
             )}
-          {spamData && (
-            <div id="spam_chart">
-              <p>Spam analysis</p>
-              <PieChart chartData={spamData} />
-            </div>
-          )}
-          {sentimentData && (
-            <div id="sentiment_chart" class="chart">
-              <p>Sentiment analysis</p>
-              <PieChart chartData={sentimentData} />
-            </div>
-          )}
-          {result.paragraph && <p>Summary: {result.paragraph}</p>}
+            {sentimentData && (
+              <div id="sentiment_chart" class="chart">
+                <p>Sentiment analysis</p>
+                <PieChart chartData={sentimentData} />
+              </div>
+            )}
+          </div>
+          <div>
+            {result.paragraph && <p>Summary: {result.paragraph}</p>}
+          </div>
         </div>
       )}
       {/*end*/}

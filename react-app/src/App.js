@@ -131,7 +131,7 @@ function App() {
     <div className="Overall-app">
       <header className="App-header">
         <img src="sss_logo.png" className="App-logo" alt="logo" />
-        <h1 className="App-title">SUSSANNAH</h1>
+        <h1 className="App-title">SUSSANAH</h1>
       </header>
 
       <div className="App-info">

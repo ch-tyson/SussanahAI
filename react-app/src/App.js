@@ -128,85 +128,86 @@ function App() {
     <div className="Overall-app">
       <header className="App-header">
         <img src="sss_logo.png" className="App-logo" alt="logo" />
-        <h1 className="App-title">SussanahAI</h1>
-
-        <p className="App-description">
-          Enter any text below and have Sussannah analyze it for you! She can
-          analyze it either for sentiment, spam, or summary. <br></br>
-          <b>Sentiment</b>: Sussanah analyzes the emotion in the text and
-          displays a pie chart of emotions shown. <br></br>
-          <b>Spam</b>: Sussanah analyzes the text and indicates how much is
-          considered spam. <br></br>
-          <b>Summary</b>: Sussanah condenses the text into a brief overview
-          capturing the main points.
-        </p>
-
-        <div className="App-description">
-          <form onSubmit={getData}>
-            <textarea
-              type="text"
-              name="paragraph"
-              value={analysisForm.paragraph}
-              onChange={(e) => onChangeHandler(e.target)}
-              cols="120"
-              rows="25"
-            />
-          </form>
-        </div>
-
-        {/*newline*/}
-        <br></br>
-        <form onSubmit={getData}>
-          {scanOption.map((name, index) => {
-            return (
-              <div className="App-buttons-outer">
-                <div className="App-buttons">
-                  <li id="Buttons-list" key={index}>
-                    <input
-                      type="checkbox"
-                      id={`custom-checkbox-${index}`}
-                      name={name}
-                      value={name}
-                      checked={checkedState[index]}
-                      onChange={() => handleOnChange(index)}
-                    />
-                    <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
-                  </li>
-                </div>
-              </div>
-            );
-          })}
-          <br />
-          <div className="Submit-button">
-            <input type="submit" value="Submit" />
-          </div>
-        </form>
-
-        {/*newline*/}
-        {result && (
-          <div>
-            <p>Your analysis details: </p>
-            {(result.options.spam != null ||
-              result.options.sentiment != null) && (
-              <p>Result: {result.options}</p>
-            )}
-            {spamData && (
-              <div id="spam_chart">
-                <p>Spam analysis</p>
-                <PieChart chartData={spamData} />
-              </div>
-            )}
-            {sentimentData && (
-              <div id="sentiment_chart" class="chart">
-                <p>Sentiment analysis</p>
-                <PieChart chartData={sentimentData} />
-              </div>
-            )}
-            {result.paragraph && <p>Summary: {result.paragraph}</p>}
-          </div>
-        )}
-        {/*end*/}
+        <h1 className="App-title">SUSSANNAH</h1>
       </header>
+
+      <p className="App-description">
+        Enter any text below and have Sussannah analyze it for you! She can
+        analyze it either for sentiment, spam, or summary. <br></br>
+        <b>Sentiment</b>: Sussanah analyzes the emotion in the text and displays
+        a pie chart of emotions shown. <br></br>
+        <b>Spam</b>: Sussanah analyzes the text and indicates how much is
+        considered spam. <br></br>
+        <b>Summary</b>: Sussanah condenses the text into a brief overview
+        capturing the main points.
+      </p>
+
+      <div className="App-description">
+        <form onSubmit={getData}>
+          <textarea
+            class="text-input"
+            type="text"
+            name="paragraph"
+            value={analysisForm.paragraph}
+            onChange={(e) => onChangeHandler(e.target)}
+            cols="120"
+            rows="25"
+          />
+        </form>
+      </div>
+
+      {/*newline*/}
+      <br></br>
+      <form onSubmit={getData}>
+        {scanOption.map((name, index) => {
+          return (
+            <div className="App-buttons-outer">
+              <div className="App-buttons">
+                <li id="Buttons-list" key={index}>
+                  <input
+                    type="checkbox"
+                    id={`custom-checkbox-${index}`}
+                    name={name}
+                    value={name}
+                    checked={checkedState[index]}
+                    onChange={() => handleOnChange(index)}
+                  />
+                  <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
+                </li>
+              </div>
+            </div>
+          );
+        })}
+        <br />
+        <div className="Submit-button">
+          <input type="submit" value="Submit" />
+        </div>
+      </form>
+
+      {/*newline*/}
+      {result && (
+        <div>
+          <p>Your analysis details: </p>
+          {(result.options.spam != null ||
+            result.options.sentiment != null) && (
+            <p>Result: {result.options}</p>
+          )}
+          {spamData && (
+            <div id="spam_chart">
+              <p>Spam analysis</p>
+              <PieChart chartData={spamData} />
+            </div>
+          )}
+          {sentimentData && (
+            <div id="sentiment_chart" class="chart">
+              <p>Sentiment analysis</p>
+              <PieChart chartData={sentimentData} />
+            </div>
+          )}
+          {result.paragraph && <p>Summary: {result.paragraph}</p>}
+        </div>
+      )}
+      {/*end*/}
     </div>
   );
 }

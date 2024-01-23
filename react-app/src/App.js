@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "./App.css";
 import PieChart from "./PieChart";
+import InfoCard from "./InfoCard";
 import {
   Chart,
   ArcElement,
@@ -133,16 +134,22 @@ function App() {
         <h1 className="App-title">SUSSANNAH</h1>
       </header>
 
-      <p className="App-description">
-        Enter any text below and have Sussannah analyze it for you! She can
-        analyze it either for sentiment, spam, or summary. <br></br>
-        <b>Sentiment</b>: Sussanah analyzes the emotion in the text and displays
-        a pie chart of emotions shown. <br></br>
-        <b>Spam</b>: Sussanah analyzes the text and indicates how much is
-        considered spam. <br></br>
-        <b>Summary</b>: Sussanah condenses the text into a brief overview
-        capturing the main points.
-      </p>
+      <div className="App-info">
+        <InfoCard
+          title="Sentiment Analysis"
+          children={"Enter any text below and have Sussannah analyze it for you! She can analyze it either for sentiment, spam, or summary."}
+        />
+
+        <InfoCard
+          title="Spam Detection"
+          children={"Sussanah analyzes the emotion in the text and displays a pie chart of emotions shown"}
+        />
+
+        <InfoCard
+          title="Text Summary"
+          children={"Sussanah condenses the text into a brief overview capturing the main points."}
+        />
+      </div>
 
       <div className="App-description">
         <form onSubmit={getData}>
@@ -165,7 +172,7 @@ function App() {
           return (
             <div className="App-buttons-outer">
               <div className="App-buttons">
-                <li id="Buttons-list" key={index}>
+                <li className="checkbox-container" id="Buttons-list" key={index}>
                   <input
                     type="checkbox"
                     id={`custom-checkbox-${index}`}
@@ -173,8 +180,12 @@ function App() {
                     value={name}
                     checked={checkedState[index]}
                     onChange={() => handleOnChange(index)}
+                    className="checkbox-input"
                   />
-                  <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
+                  <label
+                    htmlFor={`custom-checkbox-${index}`}
+                    className="checkbox-label">{name}
+                  </label>
                 </li>
               </div>
             </div>

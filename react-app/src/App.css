@@ -6,6 +6,10 @@
   text-align: center;
 }
 
+p {
+  font-family: 'Hind';
+}
+
 body {
   /* background-color: #C7E1FF; */
   background-color: #e1e1e3;
@@ -37,27 +41,6 @@ body {
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;400&display=swap');
-.App-description {
-  text-align: center;
-  font-size: calc(0.2vw + 1rem);
-  color: black;
-  font-family: 'Hind';
-}
-
-.App-input {
-  border: none;
-  width: 300px;
-  height: 30px;
-  font-size: 20px;
-  font-family: 'Hind';
-  font-weight: '400';
-  color: #6E6CCD;
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding-left: calc(100px + (100vw - 700px) * (15 - 30) / (700 -  1000));
-}
-
 .App-text {
   border: none;
   font-size: 10px;
@@ -70,7 +53,9 @@ body {
 }
 
 .text-input {
-  resize: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;  resize: none;
   width: 80%;
   min-height: 150px;
   padding: 12px 20px;
@@ -110,39 +95,9 @@ li {
   }
 }
 
-/* Style for the custom checkboxes */
-#Buttons-list input[type="checkbox"] {
-  display: none; /* Hide the default checkbox */
-}
-
-#Buttons-list label {
-  position: relative;
-  padding-left: 30px; /* Adjust as needed */
-  cursor: pointer;
-  display: inline-block;
-  font-size: 16px; /* Adjust as needed */
-}
-
-#Buttons-list label:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 20px; /* Adjust as needed */
-  height: 20px; /* Adjust as needed */
-  border: 1px solid #000000; /* Border color */
-  background-color: #fff; /* Unchecked background color */
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-#Buttons-list input[type="checkbox"]:checked + label:before {
-  background-color: #9A99D7; /* Checked background color */
-  animation: coolCheck 0.5s ease; /* Apply the cool check animation */
-}
-
 .Charts-container{
-  display: inline-flex;
+  display: flex;
+  width: 100%;
 }
 
 .color-change {
@@ -159,12 +114,87 @@ li {
   font-family: 'Hind';
   font-size: 1.3em;
   font-weight: 300;
-  background-color: #fff;
+  background-color: #f8f8f8;
   cursor: pointer;
 }
 
 .button:hover{
   background-image: linear-gradient(to left, #dbcdff, #b4c8fb);
   width: 12rem;
-  color: #fff;
+  color: #f8f8f8;
+}
+
+/* Info Cards */
+.App-info {
+  display: flex;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.info-card {
+  background: #f8f8f8;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  max-width: 20%;
+  width: auto;
+  margin: 0 10px 30px;
+
+}
+
+.info-card h3 {
+  margin-top: 0;
+  color: #464646;
+  font-family: 'Hind';
+}
+
+.info-card h3::first-letter {
+  color: #8e79c6;
+}
+
+.info-card p {
+  color: #555;
+  font-family: 'Hind';
+}
+
+/* Checkboxes */
+
+.App-buttons-outer {
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+#Buttons-list {
+  flex: 1;
+}
+
+#Buttons-list input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
+}
+
+#Buttons-list label {
+  position: relative;
+  padding: 0 50px 30px 30px;
+  cursor: pointer;
+  display: flex;
+  font-size: 16px; /* Adjust as needed */
+}
+
+#Buttons-list label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px; /* Adjust as needed */
+  height: 20px; /* Adjust as needed */
+  border: 1px solid #000000; /* Border color */
+  background-color: #f8f8f8; /* Unchecked background color */
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  
+}
+
+#Buttons-list input[type="checkbox"]:checked + label:before {
+  background-color: #9A99D7; /* Checked background color */
+  animation: coolCheck 0.5s ease; /* Apply the cool check animation */
 }

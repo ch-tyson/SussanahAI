@@ -185,7 +185,9 @@ function App() {
         {/*newline*/}
         {result && (
           <div>
-            {(result.options[1] != null || result.options[0] != null) && (
+            <p>Your analysis details: </p>
+            {(result.options.spam != null ||
+              result.options.sentiment != null) && (
               <p>Result: {result.options}</p>
             )}
             {spamData && (
@@ -194,6 +196,13 @@ function App() {
                 <PieChart chartData={spamData} />
               </div>
             )}
+            {sentimentData && (
+              <div id="sentiment_chart" class="chart">
+                <p>Sentiment analysis</p>
+                <PieChart chartData={sentimentData} />
+              </div>
+            )}
+            {result.paragraph && <p>Summary: {result.paragraph}</p>}
           </div>
         )}
         {/*end*/}

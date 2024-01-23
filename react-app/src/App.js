@@ -220,7 +220,7 @@ function App() {
                 </div>
               )}
             </div>
-            <div>
+            <div className="summary-container">
               {result.paragraph && <p className="summary-result">Summary: {result.paragraph}</p>}
             </div>
           </div>
